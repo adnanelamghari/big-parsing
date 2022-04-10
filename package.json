@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node --max_old_space_size=50 index.js",
     "find-record": "node --max_old_space_size=50 index.js",
-    "test": "mocha"
+    "test": "mocha --timeout=10000"
   },
   "repository": {
     "type": "git",
