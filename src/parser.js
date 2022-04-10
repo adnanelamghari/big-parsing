@@ -6,7 +6,7 @@ const Record = require('./record.model')
 /**
  * The file parser
  * @property readline {readline.Interface} instance
- * @property readStream {createReadStream} inctance
+ * @property readStream {createReadStream} instance
  */
 class Parser {
     readStream;
@@ -25,25 +25,25 @@ class Parser {
     async getRecordById(id) {
         return new Promise((resolve, reject) => {
             let object = ''; // to store objects as string
-            let result = undefined;
+            let record = undefined;
             this.readline
                 .on('line', (line) => {
                     let parsedLine = this.parseLine(line);
                     object += parsedLine;
                     if (parsedLine.includes('}')) { // end of an object
-                        result = new Record(JSON.parse(object));
-                        if (result.id === id) {
+                        record = new Record(JSON.parse(object));
+                        if (record.id === id) {
                             this.readStream.destroy();
-                            resolve(result);
+                            resolve(record);
                         } else {
-                            result = undefined;
+                            record = undefined;
                         }
                         object = '';
                     }
                 })
                 .on('close', () => {
                     this.readStream.destroy();
-                    resolve(result);
+                    resolve(record);
                 })
                 .on('error', (error) => {
                     this.readStream.destroy();
