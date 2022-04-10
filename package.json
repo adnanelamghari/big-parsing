@@ -4,8 +4,9 @@
   "description": "Extracting data from a JSON file too big to be parsed / hold in memory as a whole",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --max_old_space_size=50 index.js",
+    "find-record": "node --max_old_space_size=50 index.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/adnanelamghari/big-parsing/issues"
   },
-  "homepage": "https://github.com/adnanelamghari/big-parsing#readme"
+  "homepage": "https://github.com/adnanelamghari/big-parsing#readme",
+  "devDependencies": {
+    "mocha": "^9.2.2"
+  }
 }
