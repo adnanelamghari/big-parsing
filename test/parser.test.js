@@ -9,19 +9,21 @@ describe('Parser', () => {
         assert(parser);
     });
 
-    describe('Given a non existing record id (8206466666666)', () => {
-        it('should return undefined', async () => {
-            const parser = new Parser(fileURL);
-            const record = await parser.getRecordById(8206466666666);
-            assert.equal(record, undefined);
+    describe('getRecordById', () => {
+        describe('Given a non existing record id (8206466666666)', () => {
+            it('should return undefined', async () => {
+                const parser = new Parser(fileURL);
+                const record = await parser.getRecordById(8206466666666);
+                assert.equal(record, undefined);
+            });
         });
-    });
 
-    describe('Given an existing record id (82064)', () => {
-        it('should return Alec Mills', async () => {
-            const parser = new Parser(fileURL);
-            const record = await parser.getRecordById(82064);
-            assert.strictEqual(record.name, 'Alec Mills');
+        describe('Given an existing record id (82064)', () => {
+            it('should return Alec Mills', async () => {
+                const parser = new Parser(fileURL);
+                const record = await parser.getRecordById(82064);
+                assert.strictEqual(record.name, 'Alec Mills');
+            });
         });
-    });
+    })
 });
