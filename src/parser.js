@@ -28,18 +28,23 @@ class Parser {
             let record = undefined;
             this.readline
                 .on('line', (line) => {
-                    let parsedLine = this.parseLine(line);
-                    object += parsedLine;
-                    if (parsedLine.includes('}')) { // end of an object
-                        record = new Record(JSON.parse(object));
-                        if (record.id === id) {
-                            this.readStream.destroy();
-                            resolve(record);
-                        } else {
-                            record = undefined;
+                    const parsedLine = this.parseLine(line);
+                    parsedLine.forEach((chunk) => {
+                        if (!chunk.startsWith('{') && !object.endsWith('{') && !chunk.startsWith('}')) {
+                            chunk = ',' + chunk;
                         }
-                        object = '';
-                    }
+                        object += chunk;
+                        if (chunk.includes('}') && this.isJsonString(object)) { // end of an object
+                            record = new Record(JSON.parse(object));
+                            if (record.id === id) {
+                                this.readStream.destroy();
+                                resolve(record);
+                            } else {
+                                record = undefined;
+                            }
+                            object = '';
+                        }
+                    })
                 })
                 .on('close', () => {
                     this.readStream.destroy();
@@ -53,18 +58,31 @@ class Parser {
     }
 
     /**
-     * Removes start and of objects and return line without comma
+     * Removes start and of objects and return line content split by commas
      * @param line {string}
-     * @returns {string}
+     * @returns {string[]}
      */
     parseLine(line) {
-        let parsedLine = line
+        return line
             .trim()
             .replace('[', '') // remove start of list
             .replace(']', '') // remove end of list
-            .split('},')[0];
-        parsedLine = (line.includes('}') && parsedLine === '') ? '}' : parsedLine;
-        return parsedLine;
+            .split(',')
+            .filter((chunk) => !!chunk.length); // remove empty chunks
+    }
+
+    /**
+     * checks if a given string contain a valid json
+     * @param string
+     * @returns {boolean}
+     */
+    isJsonString(string) {
+        try {
+            JSON.parse(string);
+        } catch (e) {
+            return false;
+        }
+        return true;
     }
 }
 
