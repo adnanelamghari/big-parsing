@@ -16,7 +16,7 @@ The problem consists in writing a Node.js program which must:
 To simulate low memory constraints, your program should work with `node --max_old_space_size=50`
 
 ---
-This guide will walk you through using the backend of Curry application.
+This guide will walk you through using the backend of the application.
 
 ## Set up your workstation
 
