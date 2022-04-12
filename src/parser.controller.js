@@ -18,12 +18,15 @@ class ParserController {
             throw new Error('The Id of the record is missing');
         }
         console.log(`> Reading from ${this.fileURL} ..\n`);
-
-        const result = await this.parser.getRecordById(+id);
-        if (result) {
-            console.log(result.name)
-        } else {
-            console.log('No record found')
+        try {
+            const result = await this.parser.getRecordById(+id);
+            if (result) {
+                console.log(result.name)
+            } else {
+                console.log('No record found')
+            }
+        } catch (e) {
+            console.log(e)
         }
     }
 }
