@@ -46,14 +46,20 @@ Then install the dependencies with `npm`.
 
 To run the application use npm start or find-record script on the package.json file :
 
-	npm run find-record [record id]
+	npm run find-record id=[record-id]
 
-This tells npm to run `find-record` command using node : `node --max_old_space_size=50 index.js`.
+Example :
+
+     npm run start id=62359
+
+This should return: Damon Jerde
+
+This tells npm to run `find-record` command using node : `tsc && node --max_old_space_size=50 dist/index.js`.
 
 #### 3. Change the input file
 
 By default, the project will use the input.json file to look for the wanted record, you can change the file link in
-the `src/parser.controller.js` class constructor.
+the `src/parser.controller.ts` class constructor.
 
 ## Test code
 

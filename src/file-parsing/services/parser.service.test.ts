@@ -1,29 +1,23 @@
-const assert = require("assert");
-const Parser = require("../src/parser");
+import assert from 'assert';
+import { getRecordById } from './parser.service';
 
 describe('Parser', () => {
     const fileURL = 'data/input.json';
 
-    it('should be truthy', () => {
-        const parser = new Parser(fileURL);
-        assert(parser);
-    });
 
     describe('getRecordById', () => {
         describe('Given a non existing record id (8206466666666)', () => {
             it('should return undefined', async () => {
-                const parser = new Parser(fileURL);
-                const record = await parser.getRecordById(8206466666666);
+                const record = await getRecordById(8206466666666, fileURL);
                 assert.equal(record, undefined);
-            });
+            }).timeout(20000);
         });
 
         describe('Given an existing record id (82064)', () => {
             it('should return Alec Mills', async () => {
-                const parser = new Parser(fileURL);
-                const record = await parser.getRecordById(82064);
+                const record = await getRecordById(82064, fileURL);
                 assert.strictEqual(record.name, 'Alec Mills');
             });
         });
-    })
+    });
 });
