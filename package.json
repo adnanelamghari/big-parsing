@@ -1,12 +1,14 @@
 {
   "name": "big-parsing",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Extracting data from a JSON file too big to be parsed / hold in memory as a whole",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "start": "node --max_old_space_size=50 index.js",
-    "find-record": "node --max_old_space_size=50 index.js",
-    "test": "mocha --timeout=20000"
+    "start": "tsc && node --max_old_space_size=50 dist/index.js",
+    "find-record": "tsc && node --max_old_space_size=50 dist/index.js",
+    "start:prod": "npm run build && node dist/index.js",
+    "build": "rimraf ./dist && tsc --project tsconfig.build.json",
+    "test": "mocha --require ts-node/register '**/*.{test,spec}.ts'"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,11 @@
   },
   "homepage": "https://github.com/adnanelamghari/big-parsing#readme",
   "devDependencies": {
-    "mocha": "^9.2.2"
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^17.0.25",
+    "mocha": "^9.2.2",
+    "ts-node": "^10.7.0",
+    "tslint": "^6.1.3",
+    "typescript": "^4.6.3"
   }
 }
